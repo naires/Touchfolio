@@ -43,6 +43,9 @@ if( !class_exists( 'dsframework_gallery' ) )
 			if(isset($_POST['dsframework-gallery'])) {
 				$new_data = $_POST['dsframework-gallery'];
 				$this->save_meta_data($post_id, $_POST['dsframework-gallery'], $old_gallery_data, 'dsframework-gallery');
+				//Add dropdown with values yes/no for project_description by nelson d'aires
+				$this->save_meta_data($post_id, $_POST['dsframework-project_description'], get_post_meta($post_id, 'dsframework-project_description', true), 'dsframework-project_description');
+				//END Add dropdown with values yes/no for project_description by nelson d'aires
 				$this->save_meta_data($post_id, $_POST['dsframework-image-scale-mode'], get_post_meta($post_id, 'dsframework-image-scale-mode', true), 'dsframework-image-scale-mode');
 				$this->save_meta_data($post_id, $_POST['dsframework-album-background-color'], get_post_meta($post_id, 'dsframework-album-background-color', true), 'dsframework-album-background-color');
 
@@ -310,11 +313,26 @@ if( !class_exists( 'dsframework_gallery' ) )
 		}
 		public function ds_gallery_show_settings_box($currentPost, $metabox) {
 			$post_id = $currentPost->ID;
+			//Add dropdown with values yes/no for project_description by nelson d'aires
+			$project_description = get_post_meta($post_id , 'dsframework-project_description', 'true' );
+			//END Add dropdown with values yes/no for project_description by nelson d'aires
 			$img_scale_mode = get_post_meta($post_id , 'dsframework-image-scale-mode', 'true' );
 			$bg_color = get_post_meta($post_id , 'dsframework-album-background-color', 'true' );
 			$bg_pattern = get_post_meta($post_id , 'dsframework-album-background-pattern', 'true' );
 			?>
-			<table><tbody>		
+			<table><tbody>
+			<!-- Add dropdown with values yes/no for project_description by nelson d'aires -->
+            			<tr>
+					<td><label for="project_description"><?php _e('Project description', 'dsframework'); ?></label></td>
+					<td><select id="project_description" name="dsframework-project_description" >
+						<option value="default" <?php if(!$project_description || $project_description=='default'){ echo 'selected'; } ?>><?php _e('Default (from global gallery settings)', 'dsframework'); ?></option>
+						<option value="1" <?php if($project_description=='1'){ echo 'selected'; } ?>><?php _e('Yes', 'dsframework'); ?></option>
+						<option value="" <?php if($project_description==''){ echo 'selected'; } ?>><?php _e('No', 'dsframework'); ?></option>	
+						</select></td>
+                    			<td><?php _e('Yes for show description and No for false', 'dsframework'); ?></td>
+                		</tr>
+			<!-- END Add dropdown with values yes/no for project_description by nelson d'aires -->
+
 				<tr>
 					<td><label for="image-scale-mode"><?php _e('Image scale mode', 'dsframework'); ?></label></td>
 					<td><select id="image-scale-mode" name="dsframework-image-scale-mode" >
