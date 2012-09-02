@@ -187,6 +187,20 @@ add_action( 'widgets_init', 'dsframework_widgets_init' );
  */
 function dsframework_scripts() {
 	global $post;
+			//Add dropdown with values yes/no for project_description by nelson d'aires
+			$post_meta = get_post_custom();
+			$gallery_meta = unserialize( $post_meta['dsframework-gallery'][0] );
+			if($gallery_meta) {			
+			if(!isset($post_meta['dsframework-project_description']) || $post_meta['dsframework-project_description'][0] == 'default') 				            {
+				$auto_open_descr = get_ds_option('auto_open_project_desc');
+			} else {
+				$auto_open_descr = $post_meta['dsframework-project_description'][0];
+			}
+			if(!isset($post_meta['dsframework-project_description']) || $post_meta['dsframework-project_description'][0] == '') 				            {
+				$auto_open_descr = '';
+			}
+			}
+			//END Add dropdown with values yes/no for project_description by nelson d'aires	
 	// todo: optimize this part
 	if(!is_admin()) {
 		if(USE_LESS_CSS) {
@@ -217,7 +231,7 @@ function dsframework_scripts() {
 							'backToList' => __('&larr; back to list', 'dsframework'),
 							'swipeUp' => __('Swipe up', 'dsframework'),
 							'swipeDown' => __('Swipe down', 'dsframework'),
-							'autoOpenProjectDesc' => get_ds_option('auto_open_project_desc')
+							'autoOpenProjectDesc' => $auto_open_descr
 							  ));
 		}
 
