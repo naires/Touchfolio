@@ -77,7 +77,7 @@ define('ADMIN_PATH', STYLESHEETPATH . '/admin/');
 define('ADMIN_DIR', get_template_directory_uri() . '/admin/');
 define('LAYOUT_PATH', ADMIN_PATH . '/layouts/');
 
-$themedata = get_theme_data(STYLESHEETPATH . '/style.css');
+$themedata =  wp_get_theme(STYLESHEETPATH . '/style.css');
 define('THEMENAME', $themedata['Name']);
 define('OPTIONS', 'of_options'); 
 define('BACKUPS','of_backups'); 
