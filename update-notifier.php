@@ -23,7 +23,7 @@ define( 'NOTIFIER_CACHE_INTERVAL', 30 ); // The time interval for the remote XML
 function update_notifier_menu() {  
 	if (function_exists('simplexml_load_string')) { // Stop if simplexml_load_string funtion isn't available
 	    $xml = get_latest_theme_version(NOTIFIER_CACHE_INTERVAL); // Get the latest remote XML file on our server
-		$theme_data = get_theme_data(TEMPLATEPATH . '/style.css'); // Read theme current version from the style.css
+		$theme_data = wp_get_theme(TEMPLATEPATH . '/style.css'); // Read theme current version from the style.css
 
 		if( (float)$xml->latest > (float)$theme_data['Version']) { // Compare current theme version with the remote XML version
 			add_dashboard_page( NOTIFIER_THEME_NAME . ' Theme Updates', NOTIFIER_THEME_NAME . ' <span class="update-plugins count-1"><span class="update-count">New Updates</span></span>', 'administrator', 'theme-update-notifier', 'update_notifier');
@@ -43,7 +43,7 @@ function update_notifier_bar_menu() {
 		return;
 
 		$xml = get_latest_theme_version(NOTIFIER_CACHE_INTERVAL); // Get the latest remote XML file on our server
-		$theme_data = get_theme_data(TEMPLATEPATH . '/style.css'); // Read theme current version from the style.css
+		$theme_data = wp_get_theme(TEMPLATEPATH . '/style.css'); // Read theme current version from the style.css
 
 		if( (float)$xml->latest > (float)$theme_data['Version']) { // Compare current theme version with the remote XML version
 			$wp_admin_bar->add_menu( array( 'id' => 'update_notifier', 'title' => '<span>' . NOTIFIER_THEME_NAME . ' <span id="ab-updates">New Updates</span></span>', 'href' => get_admin_url() . 'index.php?page=theme-update-notifier' ) );
